@@ -52,9 +52,6 @@ add_custom_command(
   COMMAND ${RPCGEN_EXECUTABLE} -M ${CMAKE_CURRENT_SOURCE_DIR}/liblxi/src/vxi11core.rpcl
 )
 
-add_compile_definitions(_GNU_SOURCE)
-
-
 
 set(LXI_SRC_FILES
     liblxi/src/lxi.c

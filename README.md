@@ -2,6 +2,7 @@
 
 Fork from https://github.com/lxi-tools/python-liblxi
 
+sudo apt install libboost-python-dev libavahi-client-dev
 
 ## build liblxi
 
