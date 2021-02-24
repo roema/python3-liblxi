@@ -1,8 +1,10 @@
-# python-liblxi (Python3)
+# python-liblxi (Python3.8)
 
 Fork from https://github.com/lxi-tools/python-liblxi
 
-sudo apt install libboost-python-dev libavahi-client-dev
+```
+sudo apt install libboost-python-dev libavahi-client-dev pkg-config cmake libxml3-dev
+```
 
 ## build liblxi
 

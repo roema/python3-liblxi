@@ -13,15 +13,12 @@ execute_process(
 )
 include_directories(${Python_Includes})
 
-find_package(Boost REQUIRED COMPONENTS system python)
-if(Boost_FOUND)
-    include_directories(${Boost_INCLUDE_DIRS})
-    MESSAGE(STATUS "Boost_LIB_VERSION: " ${Boost_LIB_VERSION})
-    MESSAGE(STATUS "Boost_INCLUDE_DIRS are: " ${Boost_INCLUDE_DIRS})
-    MESSAGE(STATUS "Boost_PYTHON_LIBRARY is: " ${Boost_PYTHON_LIBRARY})
-    MESSAGE(STATUS "boost_LIBRARY_DIRS is: " ${Boost_LIBRARY_DIRS})
-    MESSAGE(STATUS "Boost_LIBRARIES is: " ${Boost_LIBRARIES})    
-endif()
+find_package(PythonLibs 3.6 REQUIRED)
+# Extract major/minor python version
+string(REPLACE "." ";" VERSION_LIST ${PYTHONLIBS_VERSION_STRING})
+list(GET VERSION_LIST 0 PYTHONLIBS_VERSION_MAJOR)
+list(GET VERSION_LIST 1 PYTHONLIBS_VERSION_MINOR)
+find_package(Boost COMPONENTS python${PYTHONLIBS_VERSION_MAJOR}${PYTHONLIBS_VERSION_MINOR} REQUIRED)
 
 find_package(LibXml2 REQUIRED)
 if( LIBXML2_FOUND )
@@ -94,11 +91,11 @@ target_link_libraries(lxi ${Boost_LIBRARIES})
 # figure out where to install python library
 execute_process(
     #COMMAND python -c "from distutils.sysconfig import get_python_lib; print get_python_lib(0,0,\"/usr/local\")"
-	COMMAND echo "/usr/local/lib/python3.8/dist-packages"
+	  COMMAND echo "/usr/local/lib/python3.8/dist-packages"
     OUTPUT_VARIABLE Python_site_packages
     OUTPUT_STRIP_TRAILING_WHITESPACE
 )
-MESSAGE(STATUS "Python module will be installed to: " ${Python_site_packages}) 
+MESSAGE(STATUS "Python module will be installed to: " ${Python_site_packages})
 
 # python library install target
 install(
@@ -106,4 +103,3 @@ install(
   LIBRARY
   DESTINATION ${Python_site_packages}
 )
-
